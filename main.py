@@ -46,8 +46,11 @@ def create_app():
 
     return app
 
-if __name__ == "__main__":
-    app = create_app()
-    # For production, you would use a proper ASGI server like Hypercorn
-    # hypercorn main:app
-    app.run(debug=True)
+# Create the app instance so the ASGI server (Hypercorn) can find it.
+app = create_app()
+
+# if __name__ == "__main__":
+#     # This block is for local development and will not be used by Render.
+#     # For production, use the command provided by your hosting service.
+#     app.run(debug=True)
+
