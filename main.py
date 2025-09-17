@@ -4,10 +4,8 @@ from config import config
 from routes import api as api_blueprint
 from database import helplines_collection
 
+
 def create_app():
-    """
-    Application factory function to create and configure the Quart app.
-    """
     app = Quart(__name__)
 
     # Load configuration
@@ -17,9 +15,11 @@ def create_app():
     cors(
         app,
         allow_credentials=True,
-        allow_headers=["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
+        allow_headers=["Content-Type", "Authorization",
+                       "Access-Control-Allow-Origin"],
         allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allow_origin="https://pycontacts.onrender.com/"  # Consider making this configurable
+        # Consider making this configurable
+        allow_origin="https://mypycontacts.onrender.com/"
     )
 
     # Register Blueprints (routes)
@@ -27,7 +27,6 @@ def create_app():
 
     @app.before_serving
     async def initialize_db():
-        """Seed the database with initial helpline contacts if it's empty."""
         try:
             if await helplines_collection.count_documents({}) == 0:
                 print("Database is empty. Seeding with initial contacts...")
@@ -46,11 +45,10 @@ def create_app():
 
     return app
 
-# Create the app instance so the ASGI server (Hypercorn) can find it.
+
 app = create_app()
 
 # if __name__ == "__main__":
 #     # This block is for local development and will not be used by Render.
 #     # For production, use the command provided by your hosting service.
 #     app.run(debug=True)
-

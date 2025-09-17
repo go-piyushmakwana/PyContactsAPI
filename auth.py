@@ -3,10 +3,9 @@ from quart import request, jsonify, g
 import jwt
 from config import config
 
+
 def jwt_required(f):
-    """
-    A decorator to protect routes with JWT authentication.
-    """
+
     @wraps(f)
     async def decorated_function(*args, **kwargs):
         token = None
